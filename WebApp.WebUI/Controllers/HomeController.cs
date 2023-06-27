@@ -25,21 +25,57 @@ namespace WebApp.WebUI.Controllers
 
 		public IActionResult Index()
 		{
-			//for(int i = 0; i < 10; i++)
-			//{
-			//	_userService.Create(new UserEntity { Login=$"TestUser_{i}", Email = $"testemail{i}@gmail.com", Phone=$"3809442{i}" });
-			//}
+            #region Generate 10 Test Users
+            //for (int i = 0; i < 10; i++)
+            //{
+            //	_userService.Create(new UserEntity { Login=$"TestUser_{i}", Email = $"testemail{i}@gmail.com", Phone=$"3809442{i}" });
+            //}
+            #endregion
 
-			IEnumerable<UserEntity> users = _userService.GetAll();
+            IEnumerable<UserEntity> users = _userService.GetAll();
 			return View(users);
 		}
 
-		public IActionResult Privacy()
+		// GET - CREATE
+		public IActionResult Create()
 		{
 			return View();
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		// POST - CREATE
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Create(UserEntity user)
+		{
+			_userService.Create(user);
+			return RedirectToAction("Index");
+		}
+
+        public IActionResult GetUserById(int userId)
+        {
+            var user = _userService.GetById(userId);
+
+            if (user != null)
+            {
+                return Json(user);
+            }
+           
+            return NotFound();
+        }
+
+        public IActionResult GetAllUsers()
+        {
+            IEnumerable<UserEntity> users = _userService.GetAll();
+
+			if(users != null) 
+			{
+				return Json(users);
+			}
+            
+            return NotFound();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
