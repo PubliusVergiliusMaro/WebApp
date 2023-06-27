@@ -48,7 +48,7 @@ namespace WebApp.WebUI.Controllers
 		public IActionResult Create(UserEntity user)
 		{
 			_userService.Create(user);
-			return RedirectToAction("Index");
+				return RedirectToAction("Index");
 		}
 
         public IActionResult GetUserById(int userId)

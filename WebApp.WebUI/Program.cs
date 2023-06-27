@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Data.Entities;
 using WebApp.EntityFramework;
 using WebApp.EntityFramework.Repository;
+using WebApp.Services.UserServices;
 
 namespace WebApp.WebUI
 {
@@ -13,7 +14,9 @@ namespace WebApp.WebUI
 
 			// Add services to the container.
 			builder.Services.AddDbContext<ApplicationDbContext>();
-			
+			//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+			//builder.Services.AddTransient<IUserService, UserService>();
+
 			builder.Services.AddControllersWithViews();
 			var app = builder.Build();
 

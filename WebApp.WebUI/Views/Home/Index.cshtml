@@ -15,6 +15,7 @@
                 <button id="loadAllUsersBtn" class="btn btn-secondary ml-2">Load All Users</button>
             </div>
         </div>
+        <span id="userIdError" class="text-danger"></span>
     </div>
 </div>
 
@@ -50,6 +51,8 @@
                 }
             </tbody>
         </table>
+        <p id="userNotFoundMessage" class="text-danger" style="display: none;">User not found.</p>
+
     }
     else
     {
@@ -90,6 +93,13 @@
 
             $("#displayUserBtn").click(function () {
                 var userId = parseInt($("#userIdInput").val());
+
+               if (isNaN(userId) || userId <= 0) {
+                    $("#userIdError").text("Please enter a valid User ID.");
+                    return;
+                }
+               $("#userIdError").text("");
+
 
                 $.ajax({
                     url: "/Home/GetUserById",
