@@ -1,4 +1,5 @@
-﻿using WebApp.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApp.Data.Entities;
 using WebApp.EntityFramework.Repository;
 
 namespace WebApp.Services.UserServices
@@ -19,6 +20,7 @@ namespace WebApp.Services.UserServices
 		{
 			UserEntity dbRecord = _userRepository.Table
 			   .Where(u => u.Id == Id)
+			   .Include(u=>u.SubordinateClients)
 			   .FirstOrDefault();
 			if(dbRecord == null)
 			{
@@ -31,6 +33,7 @@ namespace WebApp.Services.UserServices
 		public ICollection<UserEntity> GetAll()
 		{
 			ICollection<UserEntity> dbRecord = _userRepository.Table
+				.Include(u => u.SubordinateClients)
 				.ToList();
 			if(dbRecord ==null)
 			{
@@ -43,6 +46,7 @@ namespace WebApp.Services.UserServices
 		{
 			UserEntity dbRecord = _userRepository.Table
 			 .Where(u => u.Id == Id)
+			 .Include(u => u.SubordinateClients)
 			 .FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -57,6 +61,7 @@ namespace WebApp.Services.UserServices
 			{
 				UserEntity dbRecord = _userRepository.Table
 			   .Where(u => u.Id == user.Id)
+			   .Include(u => u.SubordinateClients)
 			   .FirstOrDefault();
 				if (dbRecord == null)
 				{

@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<WebApp.Data.Entities.UserEntity>
 
-	<div class="row pt-4">
-		<div class="col-6">
-			<h2 class="text-primary">Users List</h2>
-		</div>
+<div class="row pt-4">
+	<div class="col-6">
+		<h2 class="text-primary">Users List</h2>
 	</div>
+    <div class="col-6 d-flex justify-content-end">
+		<a asp-controller="SignUp" asp-action="Index" class="btn btn-primary w-25">
+			SignUp
+		</a>
+	</div>
+</div>
+
 
 <div class="row">
     <div class="col-6">
@@ -25,8 +31,8 @@
         <table id="userTable" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>
-                        Id
+					<th>
+						Id   
                     </th>
                     <th>
                         Login
@@ -52,12 +58,8 @@
             </tbody>
         </table>
         <p id="userNotFoundMessage" class="text-danger" style="display: none;">User not found.</p>
-
     }
-    else
-    {
-        <p>No user exists.</p>
-    }
+    else { <p>No user exists.</p> }
 </div>
 
 <div class="text-center">
@@ -90,7 +92,6 @@
                     }
                 });
             }
-
             $("#displayUserBtn").click(function () {
                 var userId = parseInt($("#userIdInput").val());
 
@@ -99,17 +100,12 @@
                     return;
                 }
                $("#userIdError").text("");
-
-
                 $.ajax({
                     url: "/Home/GetUserById",
                     type: "GET",
                     data: { userId: userId },
-                    success: function (data) {
-                        // Clear existing table rows
+                    success: function (data) {                    
                         $("#userTable tbody").empty();
-
-                        // Append the new row with the user data
                         $("#userTable tbody").append(
                             "<tr>" +
                             "<td width='25%'>" + data.id + "</td>" +
@@ -124,7 +120,6 @@
                     }
                 });
             });
-
             $("#loadAllUsersBtn").click(function () {
                 $("#userIdInput").val("");
                 loadAllUsers();
